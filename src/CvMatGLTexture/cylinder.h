@@ -42,25 +42,38 @@ public:
 	int idx[3];
 };
 
-class Cylinder
+class Mesh 
+{
+public:
+	Mesh();
+	virtual ~Mesh();
+
+	void clear();
+
+	virtual void draw();
+
+protected:
+	virtual void build_mesh_() = 0;
+
+protected:
+	std::vector<Vector3f> vertices_;
+	std::vector<Vector2f> uv_;
+	std::vector<TriangleIndex> triangles_;
+};
+
+class Cylinder : public Mesh
 {
 public:
 	Cylinder();
 	virtual ~Cylinder();
-
-	void draw();
 	
 protected:
-	void build_mesh_();
+	virtual void build_mesh_();
 
 protected:
 	int div_x_;
 	int div_y_;
 	double r_;
 	double height_;
-
-	std::vector<Vector3f> vertices_;
-	std::vector<Vector2f> uv_;
-	std::vector<TriangleIndex> triangles_;
 };
 

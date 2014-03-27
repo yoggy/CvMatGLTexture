@@ -5,8 +5,41 @@
 #define _USE_MATH_DEFINES
 #include "math.h"
 
+Mesh::Mesh() {
+}
+
+Mesh::~Mesh() {
+
+}
+
+void Mesh::clear() 
+{
+	vertices_.clear();
+	uv_.clear();
+	triangles_.clear();
+}
+
+void Mesh::draw()
+{
+	std::vector<TriangleIndex>::const_iterator t;
+	for (t = triangles_.begin(); t != triangles_.end(); ++t) {
+
+		glBegin(GL_TRIANGLES);
+		for (unsigned int i = 0; i < 3; ++i) {
+			int idx = t->idx[i];
+
+			Vector2f uv = uv_[idx];
+			glTexCoord2d(uv.x, uv.y);
+
+			Vector3f v = vertices_[idx];
+			glVertex3d(v.x, v.y, v.z); 
+		}
+		glEnd();
+	}
+}
+
 Cylinder::Cylinder(void)
-	: div_x_(40), div_y_(5), r_(2.0), height_(2.0)
+	: Mesh(), div_x_(40), div_y_(5), r_(2.0), height_(2.0)
 {
 	build_mesh_();
 }
@@ -18,9 +51,7 @@ Cylinder::~Cylinder(void)
 
 void Cylinder::build_mesh_()
 {
-	vertices_.clear();
-	uv_.clear();
-	triangles_.clear();
+	clear();
 
 	int w = div_x_ + 1;
 	int h = div_y_ + 1;
@@ -57,25 +88,5 @@ void Cylinder::build_mesh_()
 			triangles_[idx ++] = TriangleIndex(base_idx, base_idx + 1, base_idx + w + 1);				
 			triangles_[idx ++] = TriangleIndex(base_idx + w + 1, base_idx + w, base_idx); 
 		}
-	}
-}
-
-void Cylinder::draw()
-{
-	int t_count = 0;
-	std::vector<TriangleIndex>::const_iterator t;
-	for (t = triangles_.begin(); t != triangles_.end(); ++t, ++t_count) {
-
-		glBegin(GL_TRIANGLES);
-		for (unsigned int i = 0; i < 3; ++i) {
-			int idx = t->idx[i];
-
-			Vector2f uv = uv_[idx];
-			glTexCoord2d(uv.x, uv.y);
-
-			Vector3f v = vertices_[idx];
-			glVertex3d(v.x, v.y, v.z); 
-		}
-		glEnd();
 	}
 }
