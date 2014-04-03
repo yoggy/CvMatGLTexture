@@ -1,4 +1,4 @@
 CvMatGLTexture
 ====
-cv::Mat‚ðOpenGL‚ÌƒeƒNƒXƒ`ƒƒ‚Æ‚µ‚ÄŽg—p‚·‚éƒTƒ“ƒvƒ‹B
+cv::Matã‚’OpenGLã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¨ã—ã¦ä½¿ç”¨ã™ã‚‹ã‚µãƒ³ãƒ—ãƒ«ã€‚
 
